@@ -13,7 +13,7 @@ class Downloader:
           self.window = mainWindow
           self.window.title('MP4 && MP3 Downloader')
           self.window.resizable(0,0)
-          self.window.iconbitmap('img\\icon.ico')
+          #self.window.iconbitmap('img\\icon.ico')
           self.numLinks = 0
           self.ffmpegRoute = ''
 
@@ -39,7 +39,6 @@ class Downloader:
 
           #Button Directory
           Button(frameRuta, text='Guardar en', command=self.chooseDirectory).grid(row=5, column=0, columnspan=10, sticky=W+E, padx=5, pady=2)
-          
 
           #Frame Lista
           frameLista = LabelFrame(self.window, text='Lista de descarga')
@@ -72,6 +71,7 @@ class Downloader:
           self.progress = ttk.Progressbar(self.window, length=100)
           self.progress.grid(row=1, column=11, columnspan=10, sticky=W+E, padx=5, pady=5)
 
+     #Agregar de 'Entry' a la lista 'Text'
      def appendToList(self):
           link = self.url.get()
           if len(link) != 0:
@@ -84,6 +84,7 @@ class Downloader:
           self.lista['state'] = 'disable'
           self.url.delete(0, END)
 
+     #Seleccionar directorio de salida de archivos
      def chooseDirectory(self):
           self.route['state'] = 'normal'
           self.newDirectory = filedialog.askdirectory()
@@ -91,8 +92,8 @@ class Downloader:
           self.route.insert(0, self.newDirectory)
           self.route['state'] = 'readonly'
 
+     #Descargar archivos, según el formato elegido
      def downloadFiles(self):
-
           formato = self.var.get()
           percent = 100/self.numLinks
 
@@ -134,10 +135,12 @@ class Downloader:
           else:
                pass
 
+     #Descargar video
      def downVideo(self, video):
           best = video.getbest(preftype='mp4')
           best.download(self.route.get())
 
+     #Descargar Audio
      def downAudio(self, audio):
           best = audio.getbest()
           best.download(self.route.get())
