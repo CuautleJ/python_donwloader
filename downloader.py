@@ -52,12 +52,12 @@ class Downloader:
           Label(frameLista, text='Formato de descarga', anchor=CENTER).grid(row=1, column=0, columnspan=10, padx=5, pady=2, sticky=W+E)
 
           #Radio Buttons
-          self.var = StringVar()
-          self.mp3RB = Radiobutton(frameLista, text='Audio', variable=self.var, value='audio')
+          self.var = IntVar()
+          self.mp3RB = Radiobutton(frameLista, text='Audio', variable=self.var, value=1)
           self.mp3RB.grid(row=2, column=0, padx=5, pady=2)
           self.mp3RB.deselect()
 
-          self.mp4RB = Radiobutton(frameLista, text='Video', variable=self.var, value='video')
+          self.mp4RB = Radiobutton(frameLista, text='Video', variable=self.var, value=2)
           self.mp4RB.grid(row=2, column=1, padx=5, pady=2)
           self.mp4RB.select()
 
@@ -97,43 +97,28 @@ class Downloader:
           formato = self.var.get()
           percent = 100/self.numLinks
 
-          if formato == 'video':
+          if formato == 2:
                j = 1.0
                for i in range(self.numLinks):
                     link = self.lista.get(j, j+1)
-                    j+=1
+                    j+=1.0
                     videoOBJ = pafy.new(link)
                     self.downVideo(videoOBJ)
                     self.progress['value'] = self.progress['value'] + percent
                     self.window.update_idletasks()
                     time.sleep(1)
 
-               time.sleep(3)
-               self.progress['value'] = 0
-               self.lista['state'] = 'normal'
-               self.lista.delete(1.0, END)
-               self.lista['state'] = 'disable'
-               self.numLinks = 0
-          elif formato == 'audio':
-               self.ffmpegRoute = filedialog.askopenfilename()
-               j=1.0
-               for i in range(self.numLinks):
-                    link = self.lista.get(j, j+1)
-                    j+=1
-                    audioOBJ = pafy.new(link)
-                    self.downAudio(audioOBJ)
-                    self.progress['value'] = self.progress['value'] + percent
-                    self.window.update_idletasks()
-                    time.sleep(1)
-
-               time.sleep(3)
-               self.progress['value'] = 0
-               self.lista['state'] = 'normal'
-               self.lista.delete(1.0, END)
-               self.lista['state'] = 'disable'
-               self.numLinks = 0
+          elif formato == 1:
+               pass
           else:
                pass
+
+          #time.sleep(3)
+          self.progress['value'] = 0
+          self.lista['state'] = 'normal'
+          self.lista.delete(1.0, END)
+          self.lista['state'] = 'disable'
+          self.numLinks = 0
 
      #Descargar video
      def downVideo(self, video):
@@ -142,15 +127,8 @@ class Downloader:
 
      #Descargar Audio
      def downAudio(self, audio):
-          best = audio.getbest()
-          best.download(self.route.get())
-
-          AudioSegment.ffmpeg = self.ffmpegRoute
-          nameAudioFile_webm = audio.title+'.webm'
-          nameAudioFile_mp3 = audio.title+'.mp3'
-          sound = AudioSegment.from_file(self.route.get()+'\\'+nameAudioFile_webm)
-          sound.export(self.route.get()+'\\'+nameAudioFile_mp3, format='mp3', bitrate='320k')
-          os.remove(self.route.get()+'\\'+nameAudioFile_webm)
+          #Corrigiendo el audio
+          pass
 
 #Mantenr en ejecución
 if __name__ == "__main__":
