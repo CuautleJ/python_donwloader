@@ -13,7 +13,7 @@ class Downloader:
           self.window = mainWindow
           self.window.title('MP4 && MP3 Downloader')
           self.window.resizable(0,0)
-          self.window.iconbitmap('img\\icon.ico')
+          #self.window.iconbitmap('img\\icon.ico')
           self.numLinks = 0
           self.ffmpegRoute = ''
 
@@ -71,8 +71,8 @@ class Downloader:
 
           #Autor
           Label(self.window, text='Copyright © Jesús Cuautle').grid(row=1, column=0, padx=5, pady=2)
-          #Version
-          Label(self.window, text='ver 1.0.119').grid(row=1, column=1, padx=5, pady=2)
+          #Version (NumeVer.NumCommit.Date)
+          Label(self.window, text='ver 1.1.2704').grid(row=1, column=1, padx=5, pady=2)
 
           #ProgressBar
           self.progress = ttk.Progressbar(self.window, length=100)
@@ -150,7 +150,7 @@ class Downloader:
 
      #Descargar video
      def downVideo(self, video):
-          best = video.getbest(preftype='mp4')
+          best = video.getbestvideo(preftype='mp4')
           best.download(self.route.get())
 
      #Descargar Audio
