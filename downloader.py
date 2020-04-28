@@ -13,7 +13,7 @@ class Downloader:
           self.window = mainWindow
           self.window.title('MP4 && MP3 Downloader')
           self.window.resizable(0,0)
-          #self.window.iconbitmap('img\\icon.ico')
+          #self.window.iconbitmap('img\\icon.ico') 
           self.numLinks = 0
           self.ffmpegRoute = ''
 
@@ -150,7 +150,7 @@ class Downloader:
 
      #Descargar video
      def downVideo(self, video):
-          best = video.getbestvideo(preftype='mp4')
+          best = video.getbest(preftype='mp4')
           best.download(self.route.get())
 
      #Descargar Audio
