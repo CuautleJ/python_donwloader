@@ -122,6 +122,12 @@ class Downloader:
                     time.sleep(1)
 
           elif formato == 1:
+
+               if len(self.ffmpegRoute) == 0:
+                    self.ffmpegRoute = filedialog.askopenfilename()
+               else:
+                    pass
+               
                j=1.0
                for i in range(self.numLinks):
                     link = self.lista.get(j, j+1)
@@ -158,7 +164,7 @@ class Downloader:
      def downAudio(self, audio):
           best = audio.getbestaudio()
           best.download(self.route.get())
-          AudioSegment.ffmpeg = os.getcwd()+'\\codec'+'\\bin'+'\\ffmpeg.exe'
+          AudioSegment.ffmpeg = self.ffmpegRoute
           Audio_webm = audio.title+'.webm'
           Audio_mp3 = audio.title+'.mp3'
           sound = AudioSegment.from_file(self.route.get()+'\\'+Audio_webm)
